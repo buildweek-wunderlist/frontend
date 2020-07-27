@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Register = props => {
+const Header = () => {
     return (
         <div>
-test
+<h1>Wonderlist 2.0</h1>
         </div>
     )
 }
 
-export default Register
+export default Header
