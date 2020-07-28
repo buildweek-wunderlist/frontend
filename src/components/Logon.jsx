@@ -5,12 +5,12 @@ const Logon = props => {
     const {user, login, inputUser} = props
 
 
-    const submitHandler = () => {
+  const submitHandler = event => {
+      event.preventDefault()
         login()
     }
 
     const inputHandler = event => {
-        event.preventDefault()
         const name = event.target.name
         const value = event.target.value
         inputUser(name, value)
@@ -19,7 +19,7 @@ const Logon = props => {
     return (
       <div>
         <h2>User Logon</h2>
-        <form submit={submitHandler}>
+        <form onSubmit={submitHandler}>
           <label>
             <h3>Username:</h3>
                     <input
