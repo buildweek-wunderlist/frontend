@@ -8,7 +8,41 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import registerSchema from './components/formValidation/registerSchema';
 import * as yup from 'yup';
+import styled from 'styled-components'
 import PrivateRoute from './utils/PrivateRoute.js'
+
+const StyledApp = styled.div`
+  background-color: #f4f1de;
+  color: #3d405b;
+
+  .main {
+    margin: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    border: 3px solid #3d405b;
+    border-radius: 10px;
+    padding: 20px;
+
+    .login {
+      width: 50%;
+    }
+
+    .register {
+      width: 50%;
+    }
+
+    .btn {
+      background-color: #e07a5f;
+      padding: 5px 15px;
+      border-radius: 5px;
+      border-color: #e07a5f;
+      margin: 20px 0;
+      color: #f4f1de;
+      font-size: 110%;
+    }
+  }
+`
 
 //set up initial value for user and formValues state.
 
@@ -64,7 +98,6 @@ function App() {
       ...user,
       [name]: value,
     }
-    console.log(newUser)
     setUser(newUser)
   }
 
@@ -99,27 +132,37 @@ function App() {
   // two function
 
   return (
-    <div className='App'>
+    <StyledApp className="App">
       <Header />
       {/*-----------Logon page-------------*/}
-      <Route exact path="/">
-        <Logon user={user} inputUser={inputUser} login={login} />
-        <p>If you are not registed, please hit the button for registration:</p>
-        <Link to={"/register"}>
-          <button>Register</button>
-        </Link>
-      </Route>
-      {/*--------------Register-------------------*/}
-      <Route path="/register">
-        <Register
-          values={formValues}
-          errors={formErrors}
-          submit={submit}
-          update={update}
-        />
-      </Route>
+      <div className="main">
+        <Route exact path="/">
+          <div className='login'>
+            
+            <Logon user={user} inputUser={inputUser} login={login} />
+          </div>
+          <div className="register">
+            <h3>Registration</h3>
+            <p>
+              If you are not registed, please hit the button for registration:
+            </p>
+            <Link to={"/register"}>
+              <button className='btn'>Register</button>
+            </Link>
+          </div>
+        </Route>
+        {/*--------------Register-------------------*/}
+        <Route path="/register">
+          <Register
+            values={formValues}
+            errors={formErrors}
+            submit={submit}
+            update={update}
+          />
+        </Route>
+      </div>
       <Footer />
-    </div>
+    </StyledApp>
   )
 }
 
