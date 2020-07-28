@@ -7,7 +7,7 @@ export const axiosWithAuth =() => {
     headers: {
       Authorization: `Bearer ${token}`
     },
-    baseURL: 'https://jmesull-wunderlist.herokuapp.com/users/user '
+    baseURL: 'https://anotherwunderlist.herokuapp.com/',
   });
 };
 export default axiosWithAuth;
