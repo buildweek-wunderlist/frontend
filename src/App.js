@@ -8,6 +8,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import registerSchema from './components/formValidation/registerSchema';
 import * as yup from 'yup';
+import PrivateRoute from './utils/PrivateRoute.js'
 
 //set up initial value for user and formValues state.
 
