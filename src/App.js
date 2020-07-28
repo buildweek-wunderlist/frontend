@@ -97,7 +97,6 @@ function App() {
       ...user,
       [name]: value,
     }
-    console.log(newUser)
     setUser(newUser)
   }
 
