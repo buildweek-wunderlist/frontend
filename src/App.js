@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
-import './App.css';
-import Logon from './components/Logon'
-import Register from './components/Register'
-import axios from 'axios'
+import React, { useState } from "react"
+import "./App.css"
+import Logon from "./components/Logon"
+import Register from "./components/Register"
+import axios from "axios"
 import { Link, Route } from "react-router-dom"
-import Header from './components/Header'
-import Footer from './components/Footer'
-import registerSchema from './components/formValidation/registerSchema';
-import * as yup from 'yup';
-import styled from 'styled-components'
-import PrivateRoute from './utils/PrivateRoute.js'
+import Header from "./components/Header"
+import Footer from "./components/Footer"
+import registerSchema from "./components/formValidation/registerSchema"
+import * as yup from "yup"
+import styled from "styled-components"
+import PrivateRoute from "./utils/PrivateRoute.js"
 
 const StyledApp = styled.div`
   background-color: #f4f1de;
   color: #3d405b;
+  
 
   .main {
-    margin: 150px;
+    max-width: 500px;
+    margin: 150px auto;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -47,50 +49,44 @@ const StyledApp = styled.div`
 //set up initial value for user and formValues state.
 
 const initialUser = {
-  username: '',
-  password: '',
+  username: "",
+  password: "",
 }
 
 const initialFormValues = {
-  username: '',
-  password: '',
+  username: "",
+  password: "",
 }
 
 const initialFormErrors = {
-  username: '',
-  password: '',
+  username: "",
+  password: "",
 }
 
-
 //API post request page
-const apiURL = 'https://jmesull-wunderlist.herokuapp.com/createnewuser'
-
+const apiURL = "https://jmesull-wunderlist.herokuapp.com/createnewuser"
 
 function App() {
-
   const [user, setUser] = useState(initialUser)
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
 
-
   //login is the callback that passed to logon and used for POST user to API
   const login = () => {
-    axios.post(apiURL, user)
-      .then(result => console.log(result.data))
-      .catch(error => console.log(error))
+    axios
+      .post(apiURL, user)
+      .then((result) => console.log(result.data))
+      .catch((error) => console.log(error))
   }
 
-  
   const submit = () => {
-    axios.post(apiURL, formValues)
-      .then(response => {
+    axios
+      .post(apiURL, formValues)
+      .then((response) => {
         console.log(response.data)
       })
-      .catch(error => {
-
-      })
+      .catch((error) => {})
   }
-
 
   //inputUser is the callback that passed to logon and used for update user state
   const inputUser = (name, value) => {
@@ -101,21 +97,21 @@ function App() {
     setUser(newUser)
   }
 
-
   const update = (name, value) => {
-    yup.reach(registerSchema, name)
+    yup
+      .reach(registerSchema, name)
       .validate(value)
-      .then(valid => {
+      .then((valid) => {
         setFormErrors({
           ...formErrors,
-          [name]: ''
+          [name]: "",
         })
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error.errors)
         setFormErrors({
           ...formErrors,
-          [name]: error.errors[0]
+          [name]: error.errors[0],
         })
       })
 
@@ -126,9 +122,6 @@ function App() {
     setFormValues(newUser)
   }
 
-
-
-
   // two function
 
   return (
@@ -137,8 +130,7 @@ function App() {
       {/*-----------Logon page-------------*/}
       <div className="main">
         <Route exact path="/">
-          <div className='login'>
-            
+          <div className="login">
             <Logon user={user} inputUser={inputUser} login={login} />
           </div>
           <div className="register">
@@ -147,7 +139,7 @@ function App() {
               If you are not registed, please hit the button for registration:
             </p>
             <Link to={"/register"}>
-              <button className='btn'>Register</button>
+              <button className="btn">Register</button>
             </Link>
           </div>
         </Route>
@@ -166,4 +158,4 @@ function App() {
   )
 }
 
-export default App;
+export default App
