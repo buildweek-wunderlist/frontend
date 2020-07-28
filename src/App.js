@@ -19,11 +19,15 @@ const initialUser = {
 const initialFormValues = {
   username: '',
   password: '',
+  email: '',
+  terms: false
 }
 
 const initialFormErrors = {
   username: '',
   password: '',
+  email: '',
+  terms: ''
 }
 
 
@@ -103,7 +107,7 @@ function App() {
       {/*-----------Logon page-------------*/}
       <Route exact path="/">
         <Logon user={user} inputUser={inputUser} login={login} />
-        <p>If you are not registed, please hit the button for registration:</p>
+        <p>If you are not registered, please hit the button for registration:</p>
         <Link to={"/register"}>
           <button>Register</button>
         </Link>

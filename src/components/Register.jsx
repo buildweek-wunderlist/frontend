@@ -22,7 +22,7 @@ const Register = props => {
     const changeHandler = (e) => {
         e.persist(e)
         const name = e.target.name
-        const value = e.target.value
+        let value = e.target.value === 'checkbox' ? e.target.checked : e.target.value
         update(name, value)
     }
 
@@ -39,7 +39,7 @@ const Register = props => {
                 <h2>User Registration</h2>
 
                 <label htmlFor='username'>
-                    Username:
+                    Username
                     <input
                         type='text'
                         name='username'
@@ -48,6 +48,18 @@ const Register = props => {
                         onChange={changeHandler}
                     />
                 </label>
+
+                <label htmlFor='email'>
+                    Email
+                    <input
+                        type='text'
+                        name='email'
+                        placeholder='Enter email address'
+                        value={values.email}
+                        onChange={changeHandler}
+                    />
+                </label>
+
 
                 <label htmlFor='password'>
                     Password
@@ -59,9 +71,27 @@ const Register = props => {
                         onChange={changeHandler}
                     />
                 </label>
+
+                <div className='terms-link'>
+                    <a href='termsLink'>Read Terms</a>
+                </div>
+
+                <label htmlFor='terms'>
+                    Accept Terms
+                    <input
+                        type='checkbox'
+                        name='terms'
+                        checked={values.terms}
+                        onChange={changeHandler}
+                    />
+                </label>
+
+
                 <div className='errors'>
                     <div>{errors.username}</div>
+                    <div>{errors.email}</div>
                     <div>{errors.password}</div>
+                    <div>{errors.terms}</div>
                 </div>
 
                 <button>Register!</button>
