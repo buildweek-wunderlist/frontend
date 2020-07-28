@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Logon from './components/Logon'
 import Register from './components/Register'
@@ -30,6 +30,8 @@ const initialFormErrors = {
   terms: ''
 }
 
+const initialDisabled = true
+
 
 //API post request page
 const apiURL = 'https://jmesull-wunderlist.herokuapp.com/createnewuser'
@@ -40,6 +42,7 @@ function App() {
   const [user, setUser] = useState(initialUser)
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
+  const [disabled, setDisabled] = useState(initialDisabled)
 
 
   //login is the callback that passed to logon and used for POST user to API
@@ -49,7 +52,8 @@ function App() {
       .catch(error => console.log(error))
   }
 
-  
+
+  //posts new user info to API from registration form when submitted
   const submit = () => {
     axios.post(apiURL, formValues)
       .then(response => {
@@ -59,6 +63,7 @@ function App() {
 
       })
   }
+
 
 
   //inputUser is the callback that passed to logon and used for update user state
@@ -72,8 +77,10 @@ function App() {
   }
 
 
+
   const update = (name, value) => {
-    yup.reach(registerSchema, name)
+    yup
+      .reach(registerSchema, name)
       .validate(value)
       .then(valid => {
         setFormErrors({
@@ -94,12 +101,18 @@ function App() {
       [name]: value,
     }
     setFormValues(newUser)
+    console.log(newUser)
   }
 
 
 
-
-  // two function
+  useEffect(() => {
+    registerSchema
+      .isValid(formValues)
+      .then(valid => {
+        setDisabled(!valid);
+      });
+  }, [formValues]);
 
   return (
     <div className='App'>
@@ -119,6 +132,7 @@ function App() {
           errors={formErrors}
           submit={submit}
           update={update}
+          disabled={disabled}
         />
       </Route>
       <Footer />

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
 
 // const StyledRegister = styled.div`
@@ -16,7 +16,8 @@ const Register = props => {
         values,
         errors,
         submit,
-        update
+        update,
+        disabled
     } = props
 
     const changeHandler = (e) => {
@@ -26,9 +27,16 @@ const Register = props => {
         update(name, value)
     }
 
+    const checkboxHandler = (e) => {
+        const checked = e.target.checked
+        const name = e.target.name
+        update(name, checked)
+    }
+
     const submitHandler = (e) => {
         e.preventDefault();
         submit();
+        console.log('Submitted!');
 
     }
 
@@ -73,7 +81,7 @@ const Register = props => {
                 </label>
 
                 <div className='terms-link'>
-                    <a href='termsLink'>Read Terms</a>
+                    <a href='Register'>Read Terms</a>
                 </div>
 
                 <label htmlFor='terms'>
@@ -81,8 +89,8 @@ const Register = props => {
                     <input
                         type='checkbox'
                         name='terms'
-                        checked={values.terms}
-                        onChange={changeHandler}
+                        checked={values.terms.checked}
+                        onChange={checkboxHandler}
                     />
                 </label>
 
@@ -94,7 +102,7 @@ const Register = props => {
                     <div>{errors.terms}</div>
                 </div>
 
-                <button>Register!</button>
+                <button disabled={disabled}>Register!</button>
             </form>
 
         </div>
