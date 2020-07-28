@@ -9,6 +9,7 @@ import Footer from './components/Footer'
 import registerSchema from './components/formValidation/registerSchema';
 import * as yup from 'yup';
 import styled from 'styled-components'
+import PrivateRoute from './utils/PrivateRoute.js'
 
 const StyledApp = styled.div`
   background-color: #f4f1de;
