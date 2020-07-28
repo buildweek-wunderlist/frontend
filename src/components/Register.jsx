@@ -10,7 +10,6 @@ import styled from 'styled-components';
 
 
 
-
 const Register = props => {
 
     const {
