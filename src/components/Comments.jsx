@@ -10,7 +10,6 @@ const StyledCard = styled.div`
   padding: 15px;
   width: 60%;
 
-
   .card-image {
     border-radius: 100%;
   }
@@ -22,8 +21,10 @@ const StyledCard = styled.div`
     text-align: left;
   }
 
-  :hover{
-      
+  &:hover {
+    background-color: #e07a5f;
+    transform: translate(0, -5px);
+    transition-duration: 500ms;
   }
 `
 

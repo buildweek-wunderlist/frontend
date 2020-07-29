@@ -186,7 +186,6 @@ function App() {
       .get(fakeCommentsURL)
       .then((result) => {
         setComments(result.data)
-        console.log(result.data)
       })
       .catch((err) => console.log(err))
   }, [])
