@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 const StyledHeader = styled.header`
   background-color: #81b29a;
+  margin:0;
 
   h1 {
     padding: 15px;
