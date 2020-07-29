@@ -18,7 +18,8 @@ const Register = props => {
         errors,
         submit,
         update,
-        disabled
+        disabled,
+        cancel
     } = props
 
     const changeHandler = (e) => {
@@ -82,7 +83,7 @@ const Register = props => {
                 </label>
 
                 <div className='terms-link'>
-                    <a href='Register'>Read Terms</a>
+                    <a href='Register' onClick={(e) => e.preventDefault()}>Read Terms</a>
                 </div>
 
                 <label htmlFor='terms'>
@@ -90,7 +91,7 @@ const Register = props => {
                     <input
                         type='checkbox'
                         name='terms'
-                        checked={values.terms.checked}
+                        checked={values.terms}
                         onChange={checkboxHandler}
                     />
                 </label>
@@ -104,6 +105,7 @@ const Register = props => {
                 </div>
 
                 <button disabled={disabled}>Register!</button>
+                <button id='cancel' onClick={(e) => cancel()}>Cancel</button>
             </form>
 
         </div>

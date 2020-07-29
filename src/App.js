@@ -98,7 +98,10 @@ function App() {
       .then((response) => {
         console.log(response.data)
       })
-      .catch((error) => {})
+      .catch((error) => {
+
+      })
+    setFormValues(initialFormValues)
   }
 
   //inputUser is the callback that passed to logon and used for update user state
@@ -137,6 +140,10 @@ function App() {
     console.log(newUser)
   }
 
+  const cancel = () => {
+    setFormValues(initialFormValues)
+  }
+
   useEffect(() => {
     registerSchema
       .isValid(formValues)
@@ -172,6 +179,7 @@ function App() {
             submit={submit}
             update={update}
             disabled={disabled}
+            cancel={cancel}
           />
         </Route>
       </div>
