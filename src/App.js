@@ -100,8 +100,6 @@ function App() {
       .catch((error) => alert(error))
   }
 
-
-
   //posts new user info to API from registration form when submitted
 
   const submit = () => {
@@ -139,8 +137,6 @@ function App() {
     }
     setUser(newUser)
   }
-
-
 
   const update = (name, value) => {
     yup
