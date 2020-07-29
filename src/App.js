@@ -84,8 +84,10 @@ function App() {
   const login = () => {
     axios
       .post(apiURL, user)
-      .then((result) => console.log(result.data))
-      .catch((error) => console.log(error))
+      .then((result) => {console.log(result.data)
+      alert(`User Scope: ${result.data.scope}`)  }
+    )
+      .catch((error) => alert(error))
   }
 
 
