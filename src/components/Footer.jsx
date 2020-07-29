@@ -3,10 +3,11 @@ import styled from 'styled-components'
 
 const StyledFooter = styled.footer`
   background-color: #81b29a;
-  height: 10rem;
+  height: 8rem;
   display: flex;
   justify-content:center;
   align-items:center;
+  margin-top: 20px;
 `
 
 const Footer = () => {
