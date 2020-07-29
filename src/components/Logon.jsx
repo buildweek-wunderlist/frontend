@@ -27,7 +27,7 @@ const StyledLogon = styled.div`
 
 const Logon = props => {
 
-    const {user, login, inputUser} = props
+    const {user, login, inputUser, errors, disabled} = props
 
 
   const submitHandler = event => {
@@ -54,6 +54,7 @@ const Logon = props => {
               onChange={inputHandler}
               className="input"
             ></input>
+            <div>{errors.username}</div>
           </label>
           <label>
             <h4>Password:</h4>
@@ -65,9 +66,10 @@ const Logon = props => {
               onChange={inputHandler}
               className="input"
             ></input>
+            <div>{errors.password}</div>
           </label>
           <label>
-            <button className="btn">Login</button>
+            <button className="btn" disabled={disabled}>Login</button>
           </label>
         </form>
       </StyledLogon>

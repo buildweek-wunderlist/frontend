@@ -8,6 +8,7 @@ import { Link, Route } from "react-router-dom"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import registerSchema from "./components/formValidation/registerSchema"
+import loginSchema from './components/formValidation/loginSchema'
 import * as yup from "yup"
 import styled from "styled-components"
 import PrivateRoute from "./utils/PrivateRoute.js"
@@ -54,6 +55,11 @@ const initialUser = {
   password: "",
 }
 
+const initialUserErrors = {
+  username: "",
+  password: "",
+}
+
 const initialFormValues = {
 
   username: '',
@@ -69,6 +75,7 @@ const initialFormErrors = {
   terms: ''
 }
 
+const initialUserLoginDisabled = true
 const initialDisabled = true
 
 //API post request page
@@ -76,6 +83,9 @@ const apiURL = "https://jmesull-wunderlist.herokuapp.com/createnewuser"
 
 function App() {
   const [user, setUser] = useState(initialUser)
+  const [loginErrors, setLoginErrors] = useState(initialUserErrors)
+  const [loginDisabled, setLoginDisabled] = useState(initialUserLoginDisabled)
+
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(initialDisabled)
@@ -105,12 +115,31 @@ function App() {
 
   //inputUser is the callback that passed to logon and used for update user state
   const inputUser = (name, value) => {
+  yup
+  .reach(loginSchema, name)
+  .validate(value)
+  .then((valid) => {
+    setLoginErrors({
+      ...loginErrors,
+      [name]: "",
+    })
+  })
+    
+  .catch((error) => {
+    console.log(error.errors)
+    setLoginErrors({
+      ...loginErrors,
+      [name]: error.errors[0],
+    })
+  })
+
     const newUser = {
       ...user,
       [name]: value,
     }
     setUser(newUser)
   }
+
 
 
   const update = (name, value) => {
@@ -147,6 +176,14 @@ function App() {
       });
   }, [formValues]);
 
+  useEffect(() => {
+    loginSchema
+      .isValid(user)
+      .then(valid => {
+      setLoginDisabled(!valid)
+    })
+  }, [user])
+
 
   return (
     <StyledApp className="App">
@@ -156,7 +193,13 @@ function App() {
       <div className="main">
         <Route exact path="/">
           <div className="login">
-            <Logon user={user} inputUser={inputUser} login={login} />
+            <Logon
+              user={user}
+              inputUser={inputUser}
+              login={login}
+              errors={loginErrors}
+              disabled={loginDisabled}
+            />
           </div>
           <div className="register">
             <h3>Registration</h3>
