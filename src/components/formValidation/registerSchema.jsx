@@ -1,4 +1,3 @@
-import React from 'react';
 import * as yup from 'yup';
 
 
@@ -9,8 +8,16 @@ const registerSchema = yup.object().shape({
         .required('Name is required'),
     password: yup
         .string()
-        .min(8, 'Must be at least 8 characters')
-        .required('Password creating is required')
+        .min(8, 'Password must be at least 8 characters long.')
+        .required('Password creating is required.'),
+    email: yup
+        .string()
+        .email('Must be a valid email address.')
+        .required('Must include email address.'),
+    terms: yup
+        .boolean()
+        .oneOf([true], 'Must accept terms of service.')
+
 })
 
 export default registerSchema;

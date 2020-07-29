@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+
+import React, { useState, useEffect } from 'react';
 import "./App.css"
 import Logon from "./components/Logon"
 import Register from "./components/Register"
@@ -54,14 +55,21 @@ const initialUser = {
 }
 
 const initialFormValues = {
-  username: "",
-  password: "",
+
+  username: '',
+  password: '',
+  email: '',
+  terms: false
 }
 
 const initialFormErrors = {
-  username: "",
-  password: "",
+  username: '',
+  password: '',
+  email: '',
+  terms: ''
 }
+
+const initialDisabled = true
 
 //API post request page
 const apiURL = "https://jmesull-wunderlist.herokuapp.com/createnewuser"
@@ -70,6 +78,7 @@ function App() {
   const [user, setUser] = useState(initialUser)
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
+  const [disabled, setDisabled] = useState(initialDisabled)
 
   //login is the callback that passed to logon and used for POST user to API
   const login = () => {
@@ -78,6 +87,10 @@ function App() {
       .then((result) => console.log(result.data))
       .catch((error) => console.log(error))
   }
+
+
+
+  //posts new user info to API from registration form when submitted
 
   const submit = () => {
     axios
@@ -96,6 +109,7 @@ function App() {
     }
     setUser(newUser)
   }
+
 
   const update = (name, value) => {
     yup
@@ -120,14 +134,23 @@ function App() {
       [name]: value,
     }
     setFormValues(newUser)
+    console.log(newUser)
   }
 
-  // two function
+  useEffect(() => {
+    registerSchema
+      .isValid(formValues)
+      .then(valid => {
+        setDisabled(!valid);
+      });
+  }, [formValues]);
+
 
   return (
     <StyledApp className="App">
       <Header />
       {/*-----------Logon page-------------*/}
+
       <div className="main">
         <Route exact path="/">
           <div className="login">
@@ -135,9 +158,7 @@ function App() {
           </div>
           <div className="register">
             <h3>Registration</h3>
-            <p>
-              If you are not registed, please hit the button for registration:
-            </p>
+            <p>If you are not registered, please hit the button for registration:</p>
             <Link to={"/register"}>
               <button className="btn">Register</button>
             </Link>
@@ -150,6 +171,7 @@ function App() {
             errors={formErrors}
             submit={submit}
             update={update}
+            disabled={disabled}
           />
         </Route>
       </div>
