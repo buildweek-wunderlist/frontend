@@ -16,7 +16,8 @@ import PrivateRoute from "./utils/PrivateRoute.js"
 const StyledApp = styled.div`
   background-color: #f4f1de;
   color: #3d405b;
-  
+  display: flex;
+  flex-direction:column;
 
   .main {
     max-width: 500px;
