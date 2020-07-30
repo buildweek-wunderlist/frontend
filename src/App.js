@@ -49,7 +49,7 @@ const StyledApp = styled.div`
   }
 `
 
-//set up initial value for user and formValues state.
+//initial states for user login-------------------------
 
 const initialUser = {
   username: "",
@@ -61,6 +61,8 @@ const initialUserErrors = {
   password: "",
 }
 
+
+//Initial states for new user registration form----------
 const initialFormValues = {
   username: "",
   password: "",
@@ -75,24 +77,28 @@ const initialFormErrors = {
   terms: "",
 }
 
+//initially disabled Login and Register buttons---------
 const initialUserLoginDisabled = true
-const initialDisabled = true
+const initialRegDisabled = true
 
+//array of comment cards--------------------------------
 const initialComments = []
 
-//API post request page
+//API get/post request page-----------------------------
 const apiURL = "https://jmesull-wunderlist.herokuapp.com/createnewuser"
 const fakeCommentsURL = "https://5f21ae29daa42f0016665eea.mockapi.io/comments/"
 
 function App() {
+//logon states------------------------------------------
   const [user, setUser] = useState(initialUser)
   const [loginErrors, setLoginErrors] = useState(initialUserErrors)
   const [loginDisabled, setLoginDisabled] = useState(initialUserLoginDisabled)
   const [comments, setComments] = useState(initialComments)
 
+//registration states-----------------------------------
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
-  const [disabled, setDisabled] = useState(initialDisabled)
+  const [regDisabled, setRegDisabled] = useState(initialRegDisabled)
 
 
   //login is the callback that passed to logon and used for POST user to API
@@ -107,7 +113,7 @@ function App() {
   }
 
 
-  //post request to register new user
+  //post request to register new user-------------------
 
   const submit = () => {
     axios
@@ -149,7 +155,7 @@ function App() {
   }
 
   
-  //validation
+  //registration validation - updates list of users to include new registered user
 
   const update = (name, value) => {
     yup
@@ -177,23 +183,28 @@ function App() {
     console.log(newUser)
   }
 
+
+  //registration form cancel button---------------------
   const cancel = () => {
     setFormValues(initialFormValues)
     setFormErrors(initialFormErrors)
   }
 
+  //register schema-------------------------------------
   useEffect(() => {
     registerSchema.isValid(formValues).then((valid) => {
-      setDisabled(!valid)
+      setRegDisabled(!valid)
     })
   }, [formValues])
 
+  //logon schema----------------------------------------
   useEffect(() => {
     loginSchema.isValid(user).then((valid) => {
       setLoginDisabled(!valid)
     })
   }, [user])
 
+  //GET request - comment cards-------------------------
   useEffect(() => {
     axios
       .get(fakeCommentsURL)
@@ -206,9 +217,8 @@ function App() {
   return (
     <StyledApp className="App">
       <Header />
-      {/*-----------Logon page-------------*/}
-
       <div className="main">
+        {/*-----------------Logon page------------------*/}
         <Route exact path="/">
           <div className="login">
             <Logon
@@ -229,18 +239,19 @@ function App() {
             </Link>
           </div>
         </Route>
-        {/*--------------Register-------------------*/}
+        {/*--------------Register form-------------------*/}
         <Route path="/register">
           <Register
             values={formValues}
             errors={formErrors}
-            disabled={disabled}
+            regDisabled={regDisabled}
             submit={submit}
             update={update}
             cancel={cancel}
           />
         </Route>
       </div>
+      {/* --------------Comments section----------------- */}
       <div className="comments">
         <Comments comments={comments} />
       </div>

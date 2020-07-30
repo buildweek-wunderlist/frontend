@@ -14,26 +14,20 @@ const StyledRegister = styled.div`
 
     .reg-left {
         width: 50%;
+        padding-bottom: 1rem;
+        line-height: 0;
     }
 
     .reg-right {
         width: 50%;
-    }
-
-    .bottom-section {
-        display: flex;
-        flex-direction: column;
+        padding: 2.5rem 0;
+        line-height: 0;
     }
 
     .text-input-container {
         display: flex;
-        justify-content: center;
         flex-direction: row;
-    }
-
-    .asterisk {
-        color: red;
-        font-size: 1.5rem;
+        justify-content: center;
     }
 
     .input-textfield {
@@ -42,84 +36,96 @@ const StyledRegister = styled.div`
         border-radius: .5rem;
     }
 
-
-
-/* tentative custom checkbox styles */
-/* 
-.checkbox-container input {
-    opacity: 1;
-    cursor: pointer;
-    height: 25px;
-    width: 25px;
-}
-
-.custom-checkmark-div {
-    border: 2px solid blue;
-    display: flex;
-    justify-content: center;
-
-}
-
-.custom-checkmark {
-    border: 4px solid blue;
-    height: 25px;
-    width: 25px;
-    background-color: red;
-} */
-
-/* END checkbox styles */
-
-.errors {
-    display: flex;
-    flex-direction: column;
-    color: red;
-}
-
-.regform-buttons{
-    display: flex;
-    flex-direction: column;
-}
-
-.reg-button {
-    display: flex;
-    justify-content: center;
-}
-#reg-button {
-    background-color: #e07a5f;
-    padding: 5px 15px;
-    border-radius: 5px;
-    border-color: #e07a5f;
-    margin-top: 1rem;
-    color: #f4f1de;
-    font-size: 1.1rem;
+    .asterisk {
+        font-size: 1.5rem;
+        color: red;
     }
 
-.cancel-button {
-    display: flex;
-    justify-content: flex-end;
-}
+    .bottom-section {
+        display: flex;
+        flex-direction: column;
+    }
 
-#cancel-button {
-    background-color: #e07a5f;
-    padding: 5px 15px;
-    border-radius: 5px;
-    border-color: #e07a5f;
-    color: #f4f1de;
-    font-size: 0.7rem;
-}
+    .terms-accept-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .checkbox-label input {
+        cursor: pointer;
+    }
+
+    .terms-group h4 {
+        margin: 0;
+        padding-right: .5rem;
+        line-height: 1.3rem;
+    }
+
+    .errors {
+        display: flex;
+        flex-direction: column;
+        padding: .5rem 0;
+        color: red;
+    }
+
+    .required-text h5 {
+        margin: 0;
+        padding: .2rem 1.9rem .2rem 0;
+        color: red;
+    }
+
+    .regform-buttons{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .reg-button {
+        display: flex;
+        justify-content: center;
+    }
+
+    .cancel-button {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+        height: 2rem;
+    }
+
+    #cancel-button {
+        background-color: #E07A5F;
+        border-color: #E07A5F;
+        color: #F4F1DE;
+        padding: .2rem .8rem;
+        border-radius: .5rem .25rem; 
+        font-size: 0.7rem;
+        cursor: pointer;
+    }
 
 `
+const StyledRegButton = styled.button`
+    background-color: #E07A5F;
+    border-color: #E87A5F;
+    color: #F4F1DE;
+    padding: .25rem 1.5rem;
+    border-radius: .25rem;
+    font-size: 1.1rem;
+    letter-spacing: .1rem;
+    cursor: pointer;
 
+    &:disabled {
+        background-color: #F2CC8F;
+        border-color: #F2CC8F;
+        color: #F4F1DE;
+    }
+`
 //END OF STYLES
 
-
-
 const Register = props => {
-
     const {
         values,
         errors,
-        disabled,
+        regDisabled,
         submit,
         update,
         cancel
@@ -142,15 +148,12 @@ const Register = props => {
         e.preventDefault();
         submit();
         console.log('Submitted!');
-
     }
-
 
     return (
         <StyledRegister className='registration-form-container'>
             <form onSubmit={submitHandler} className='register-form'>
                 <h2>New User Registration</h2>
-
                 <div className='top-section'>
                     <div className='reg-left'>
                         <label htmlFor='username'>
@@ -191,48 +194,42 @@ const Register = props => {
                                     className='input-textfield'
                                     type='text'
                                     name='password'
-                                    placeholder='Create New Password'
+                                    placeholder='Must be minimum of 8 characters.'
                                     value={values.password}
                                     onChange={changeHandler}
                                 />
                             </div>
-
-                            <h6>Must be minimum of 8 characters.</h6>
                         </label>
                     </div>
                 </div>
-
                 <div className='bottom-section'>
                     <div className='terms-group'>
                         <div className='terms-link'>
                             <a href='Register' onClick={(e) => e.preventDefault()}>Read Terms</a>
                         </div>
-
-                        <label htmlFor='terms' className='checkbox-container'>
+                        <div className='terms-accept-box'>
                             <h4><span className='asterisk'>* </span>Accept Terms</h4>
-                            <div className='custom-checkmark-div'>
-                                <span className='custom-checkmark'></span>
-                            </div>
-                            <input
-                                type='checkbox'
-                                name='terms'
-                                checked={values.terms}
-                                onChange={checkboxHandler}
-                            />
-                        </label>
+                            <label htmlFor='terms' className='checkbox-label'>
+                                <input
+                                    type='checkbox'
+                                    name='terms'
+                                    checked={values.terms}
+                                    onChange={checkboxHandler}
+                                />
+                            </label>
+                        </div>
                     </div>
-
                     <div className='errors'>
-                        <h6>* Required</h6>
                         <div>{errors.username}</div>
                         <div>{errors.email}</div>
                         <div>{errors.password}</div>
                         <div>{errors.terms}</div>
                     </div>
+                    <span className='required-text'><h5><span className='asterisk'>* </span>Required</h5></span>
 
                     <div className='regform-buttons'>
                         <div class='reg-button'>
-                            <button id='reg-button' disabled={disabled}>Register!</button>
+                            <StyledRegButton id='reg-button' disabled={regDisabled}>Register!</StyledRegButton>
                         </div>
                         <div class='cancel-button'>
                             <button id='cancel-button' onClick={(e) => cancel()}
