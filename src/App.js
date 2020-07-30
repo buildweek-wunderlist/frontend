@@ -94,6 +94,7 @@ function App() {
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(initialDisabled)
 
+
   //login is the callback that passed to logon and used for POST user to API
   const login = () => {
     axios
@@ -105,7 +106,8 @@ function App() {
       .catch((error) => alert(error))
   }
 
-  //posts new user info to API from registration form when submitted
+
+  //post request to register new user
 
   const submit = () => {
     axios
@@ -113,7 +115,10 @@ function App() {
       .then((response) => {
         console.log(response.data)
       })
-      .catch((error) => {})
+      .catch((error) => {
+
+      })
+    setFormValues(initialFormValues)
   }
 
   //inputUser is the callback that passed to logon and used for update user state
@@ -143,6 +148,9 @@ function App() {
     setUser(newUser)
   }
 
+  
+  //validation
+
   const update = (name, value) => {
     yup
       .reach(registerSchema, name)
@@ -167,6 +175,11 @@ function App() {
     }
     setFormValues(newUser)
     console.log(newUser)
+  }
+
+  const cancel = () => {
+    setFormValues(initialFormValues)
+    setFormErrors(initialFormErrors)
   }
 
   useEffect(() => {
@@ -221,9 +234,10 @@ function App() {
           <Register
             values={formValues}
             errors={formErrors}
+            disabled={disabled}
             submit={submit}
             update={update}
-            disabled={disabled}
+            cancel={cancel}
           />
         </Route>
       </div>
