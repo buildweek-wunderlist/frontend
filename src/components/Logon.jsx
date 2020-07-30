@@ -8,26 +8,33 @@ const StyledLogon = styled.div`
     flex-direction: column;
   }
 
-  .btn {
-    background-color: #e07a5f;
-    padding: 5px 15px;
-    border-radius: 5px;
-    border-color: #e07a5f;
-    margin: 20px 0; 
-  }
-
-  .input{
+  .input {
     padding: 10px;
-    box-shadow:none;
+    box-shadow: none;
     border-radius: 5px;
     border: 1px solid lightgray;
   }
+`
 
+const StyledButton = styled.button`
+  padding: 5px 15px;
+  border-radius: 5px;
+  margin: 20px 0;
+  font-size: 100%;
+  background-color: #e07a5f;
+  border-color: #e07a5f;
+  color: #f4f1de;
+
+  &:disabled {
+    background-color: #f2cc8f;
+    color: #f4f1de;
+    border-color: #f2cc8f;
+  }
 `
 
 const Logon = props => {
 
-    const {user, login, inputUser} = props
+    const {user, login, inputUser, errors, disabled} = props
 
 
   const submitHandler = event => {
@@ -54,6 +61,7 @@ const Logon = props => {
               onChange={inputHandler}
               className="input"
             ></input>
+            <div>{errors.username}</div>
           </label>
           <label>
             <h4>Password:</h4>
@@ -65,9 +73,10 @@ const Logon = props => {
               onChange={inputHandler}
               className="input"
             ></input>
+            <div>{errors.password}</div>
           </label>
           <label>
-            <button className="btn">Login</button>
+            <StyledButton disabled={disabled}>Login</StyledButton>
           </label>
         </form>
       </StyledLogon>
